@@ -1,4 +1,4 @@
-import avatar1 from "../assets/perfiles/avatar1.jpg";
+import avatar1 from "../assets/perfiles/avatars.jpeg";
 import avatar2 from "../assets/perfiles/avatar1.jpg";
 import avatar3 from "../assets/perfiles/avatar1.jpg";
 import avatar4 from "../assets/perfiles/avatar1.jpg";

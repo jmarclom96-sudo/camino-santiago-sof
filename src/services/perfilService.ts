@@ -1,8 +1,27 @@
-import { perfiles, type Perfil } from "../data/perfiles";
+import type { Perfil } from "../data/perfiles";
 
 const STORAGE_KEY = "perfilActual";
 
-export function login(usuario: string, password: string): Perfil | null {
+async function obtenerPerfiles(): Promise<Perfil[]> {
+
+    const response = await fetch("/api/usuarios");
+
+    if (!response.ok) {
+        throw new Error("Error al obtener los usuarios");
+    }
+
+    const data = await response.json();
+
+    return data.usuarios;
+}
+
+
+export async function login(
+    usuario: string,
+    password: string
+): Promise<Perfil | null> {
+
+    const perfiles = await obtenerPerfiles();
 
     const perfil = perfiles.find(
         p =>
@@ -14,16 +33,21 @@ export function login(usuario: string, password: string): Perfil | null {
         return null;
     }
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(perfil));
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(perfil)
+    );
 
     return perfil;
 }
+
 
 export function logout(): void {
 
     localStorage.removeItem(STORAGE_KEY);
 
 }
+
 
 export function getPerfilActual(): Perfil | null {
 
@@ -34,7 +58,9 @@ export function getPerfilActual(): Perfil | null {
     }
 
     return JSON.parse(perfil) as Perfil;
+
 }
+
 
 export function estaLogueado(): boolean {
 
@@ -42,13 +68,18 @@ export function estaLogueado(): boolean {
 
 }
 
-export function iniciarSesion(usuario: string, password: string): Perfil | null {
 
-    const perfil = login(usuario, password);
+export async function iniciarSesion(
+    usuario: string,
+    password: string
+): Promise<Perfil | null> {
+
+    const perfil = await login(usuario, password);
 
     if (!perfil) {
         return null;
     }
 
     return perfil;
+
 }

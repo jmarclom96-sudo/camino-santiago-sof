@@ -2,8 +2,10 @@ import { useState } from "react";
 
 import { login } from "../services/perfilService";
 
+import type { Perfil } from "../data/perfiles";
+
 type Props = {
-    onLogin: (perfil: ReturnType<typeof login>) => void;
+    onLogin: (perfil: Perfil) => void;
     onClose: () => void;
 };
 
@@ -12,9 +14,12 @@ export default function LoginModal({ onLogin, onClose }: Props) {
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
 
-    function iniciarSesion() {
+    async function iniciarSesion() {
 
-        const perfilLogueado = login(usuario, password);
+        const perfilLogueado = await login(
+            usuario,
+            password
+        );
 
         if (!perfilLogueado) {
 
