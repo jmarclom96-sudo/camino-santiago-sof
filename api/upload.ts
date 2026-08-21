@@ -44,7 +44,7 @@ export default {
 
             console.log("Respuesta enviada");
 
-            return response;
+            return Response.json(response);
 
         } catch (error) {
 
