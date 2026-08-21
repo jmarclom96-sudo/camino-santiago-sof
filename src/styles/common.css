@@ -1,0 +1,498 @@
+/* ==========================================================
+   BOTONES
+========================================================== */
+
+.btn-primary {
+
+    background: var(--color-primary);
+    color: var(--color-surface);
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    padding: 14px 24px;
+
+    font-size: 1.1rem;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+}
+
+.btn-primary:hover {
+
+    background: var(--color-primary-dark);
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ==========================================================
+   TARJETAS GENERALES
+========================================================== */
+
+.card {
+
+    background: var(--color-surface);
+
+    border-radius: var(--radius-md);
+
+    padding: var(--space-md);
+
+    box-shadow: var(--shadow);
+
+    transition: var(--transition);
+
+}
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+}
+
+
+/* ==========================================================
+   GRID DE CARDS
+========================================================== */
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: var(--space-md);
+
+    width: min(1000px, 90%);
+
+    margin: var(--space-xl) auto;
+
+}
+
+
+/* ==========================================================
+   SWIPER
+========================================================== */
+
+.swiper {
+
+    width: min(700px, 90%);
+
+    margin: auto;
+
+}
+
+.swiper-slide {
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+
+/* ==========================================================
+   TARJETA DE ETAPA
+========================================================== */
+
+.etapa-card {
+
+    background: var(--color-surface);
+
+    border-radius: var(--radius-lg);
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow);
+
+    max-width: 700px;
+
+    margin: auto;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+}
+
+.etapa-card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: var(--shadow-lg);
+
+}
+
+.etapa-card img {
+
+    width: 100%;
+
+    height: 300px;
+
+    object-fit: cover;
+
+}
+
+.imagen-container {
+
+    position: relative;
+
+}
+
+.numero-etapa {
+
+    position: absolute;
+
+    top: 20px;
+
+    left: 20px;
+
+    width: 56px;
+
+    height: 56px;
+
+    border-radius: 50%;
+
+    background: var(--color-primary);
+
+    color: var(--color-surface);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 1.4rem;
+
+    font-weight: bold;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+/* ==========================================================
+   CUERPO TARJETA ETAPA
+========================================================== */
+
+.etapa-body {
+
+    padding: var(--space-md);
+
+}
+
+.etapa-body h2 {
+
+    margin-bottom: var(--space-md);
+
+    font-size: 2rem;
+
+    color: var(--color-primary-dark);
+
+}
+
+
+/* ==========================================================
+   INFORMACIÓN ETAPA
+========================================================== */
+
+.info-etapa {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: var(--space-sm);
+
+    color: var(--color-text-secondary);
+
+}
+
+.datos {
+
+    display: flex;
+
+    justify-content: space-around;
+
+    text-align: center;
+
+    margin-bottom: var(--space-md);
+
+}
+
+.dato {
+
+    flex: 1;
+
+}
+
+.dato span {
+
+    display: block;
+
+    font-size: 1.5rem;
+
+}
+
+.dato p {
+
+    margin-top: 6px;
+
+    color: var(--color-text-secondary);
+
+    font-size: .9rem;
+
+}
+
+
+/* ==========================================================
+   PÁGINA ITINERARIO
+========================================================== */
+
+.itinerario-page {
+
+    width: min(1200px, 100%);
+
+    margin: auto;
+
+    padding: var(--space-lg) var(--space-sm) var(--space-xl);
+
+}
+
+.itinerario-page h1 {
+
+    margin-bottom: var(--space-lg);
+
+    text-align: center;
+
+    color: var(--color-primary-dark);
+
+    font-size: 2.2rem;
+
+}
+
+
+/* ==========================================================
+   UTILIDADES
+========================================================== */
+
+.text-center {
+
+    text-align: center;
+
+}
+
+.mt-lg {
+
+    margin-top: var(--space-lg);
+
+}
+
+.mb-lg {
+
+    margin-bottom: var(--space-lg);
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width:768px) {
+
+    .cards {
+
+        width: 95%;
+
+    }
+
+    .etapa-card img {
+
+        height: 230px;
+
+    }
+
+    .etapa-body h2 {
+
+        font-size: 1.5rem;
+
+    }
+
+    .info-etapa {
+
+        justify-content: center;
+
+    }
+
+}
+
+/* ==========================================================
+   MODALES
+========================================================== */
+
+.modal-backdrop {
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(15, 23, 42, .55);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 2000;
+
+}
+
+.modal {
+
+    width: min(420px, 92%);
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 32px;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .25);
+
+}
+
+.modal h2 {
+
+    text-align: center;
+
+    margin-bottom: 24px;
+
+    color: var(--color-primary);
+
+}
+
+.modal input {
+
+    width: 100%;
+
+    padding: 14px 16px;
+
+    margin-bottom: 16px;
+
+    border: 1px solid #d6dde6;
+
+    border-radius: 12px;
+
+    font-size: 1rem;
+
+    transition: .2s;
+
+}
+
+.modal input:focus {
+
+    outline: none;
+
+    border-color: var(--color-primary);
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+
+}
+
+.modal-buttons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 10px;
+
+}
+
+/* ==========================================================
+   BOTÓN SECUNDARIO
+========================================================== */
+
+.btn-secondary {
+
+    background: #eef2f7;
+
+    color: #374151;
+
+    border: none;
+
+    padding: 14px 24px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+.btn-secondary:hover {
+
+    background: #dde5ef;
+
+}
+
+/* ---------- Imagen de la reflexión ---------- */
+
+.reflexion-imagen {
+
+    width: 100%;
+
+    border-radius: 18px;
+
+    margin-top: 2.5rem;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,.15);
+
+    object-fit: cover;
+
+    max-height: 420px;
+
+}
+
+/* ---------- Preguntas ---------- */
+
+.preguntas {
+
+    margin-top: 2rem;
+
+}
+
+.preguntas h2 {
+
+    color: var(--primary-color);
+
+    margin-bottom: 1rem;
+
+}
+
+.preguntas ul {
+
+    padding-left: 1.5rem;
+
+}
+
+.preguntas li {
+
+    margin-bottom: .9rem;
+
+    line-height: 1.8;
+
+}
+

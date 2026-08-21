@@ -1,0 +1,184 @@
+/* ==========================================================
+   NAVBAR
+========================================================== */
+
+.navbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 16px 30px;
+
+    background: var(--color-primary);
+
+    color: var(--color-surface);
+
+    box-shadow: var(--shadow);
+
+}
+
+.navbar h2 {
+
+    margin: 0;
+
+    font-size: 1.4rem;
+
+    font-weight: 700;
+
+}
+
+
+/* ==========================================================
+   ENLACES
+========================================================== */
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+}
+
+.nav-links a {
+
+    color: inherit;
+
+    font-weight: 600;
+
+    transition: var(--transition);
+
+}
+
+.nav-links a:hover {
+
+    opacity: .8;
+
+}
+
+
+/* ==========================================================
+   BOTÓN HAMBURGUESA
+========================================================== */
+
+.menu-btn {
+
+    display: none;
+
+    background: none;
+
+    border: none;
+
+    color: inherit;
+
+    font-size: 2rem;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+}
+
+.menu-btn:hover {
+
+    opacity: .8;
+
+}
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.navbar-logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:0;
+
+}
+
+.navbar-logo img{
+
+    width:34px;
+
+    height:34px;
+
+    object-fit:contain;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width:768px) {
+
+    .menu-btn {
+
+        display: block;
+
+    }
+
+    .nav-links {
+
+        position: absolute;
+
+        top: 100%;
+
+        left: 0;
+
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 0;
+
+        background: var(--color-primary);
+
+        overflow: hidden;
+
+        max-height: 0;
+
+        transition: max-height .35s ease;
+
+    }
+
+    .nav-links.open {
+
+        max-height: 500px;
+
+    }
+
+    .nav-links a {
+
+        width: 100%;
+
+        padding: 18px;
+
+        text-align: center;
+
+        border-top: 1px solid rgba(255,255,255,.12);
+
+    }
+
+}

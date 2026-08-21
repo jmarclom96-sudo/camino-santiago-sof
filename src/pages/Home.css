@@ -1,0 +1,114 @@
+/* ==========================================================
+   HERO
+========================================================== */
+
+.hero {
+
+    min-height: calc(100vh - 70px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: var(--space-lg) var(--space-sm);
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+}
+
+
+/* ==========================================================
+   OVERLAY
+========================================================== */
+
+.overlay {
+
+    width: min(700px, 90%);
+
+    margin-top: 30px;
+
+    padding: 50px;
+
+    text-align: center;
+
+    color: var(--color-primary-dark);
+
+    background: rgba(255,255,255,.45);
+
+    backdrop-filter: blur(8px);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-lg);
+
+}
+
+.overlay h1 {
+
+    margin-bottom: var(--space-sm);
+
+    font-size: 3rem;
+
+}
+
+.overlay p {
+
+    margin-bottom: var(--space-lg);
+
+    font-size: 1.2rem;
+
+    line-height: 1.7;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width:768px) {
+
+    .hero {
+
+        padding: var(--space-sm);
+
+    }
+
+    .overlay {
+
+        padding: 32px 24px;
+
+    }
+
+    .overlay h1 {
+
+        font-size: 2.2rem;
+
+    }
+
+    .overlay p {
+
+        font-size: 1rem;
+
+    }
+
+}
+
+.hero {
+    transition: opacity .5s ease, transform .5s ease;
+}
+
+.hero-saliendo {
+    opacity: 0;
+    transform: scale(1.03);
+}
+
+

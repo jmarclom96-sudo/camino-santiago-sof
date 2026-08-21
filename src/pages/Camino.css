@@ -1,0 +1,622 @@
+/* =======================================================
+   CAMINO
+======================================================= */
+
+.camino-page {
+
+    min-height: calc(100vh - var(--navbar-height));
+
+    padding: 3rem 1.25rem 4rem;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f7f8f6 0%,
+            #ffffff 100%
+        );
+
+    overflow: hidden;
+
+}
+
+
+/* =======================================================
+   CABECERA
+======================================================= */
+
+.camino-header {
+
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    text-align: center;
+
+}
+
+.camino-eyebrow {
+
+    margin: 0 0 .5rem;
+
+    font-size: .72rem;
+
+    letter-spacing: .18em;
+
+    font-weight: 700;
+
+    color: #8b918b;
+
+}
+
+.camino-header h1 {
+
+    margin: 0;
+
+    font-size: 2.5rem;
+
+    color: #303830;
+
+}
+
+.camino-subtitle {
+
+    margin: .6rem 0 0;
+
+    color: #858b85;
+
+    font-size: 1rem;
+
+}
+
+
+/* =======================================================
+   PERFIL
+======================================================= */
+
+.camino-perfil {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .8rem;
+
+    width: fit-content;
+
+    margin: 2rem auto 1rem;
+
+    padding: .5rem .9rem .5rem .5rem;
+
+    background: rgba(255,255,255,.8);
+
+    border: 1px solid #e5e8e4;
+
+    border-radius: 999px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,.05);
+
+}
+
+.camino-perfil img {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+}
+
+.camino-perfil div {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.camino-perfil span {
+
+    font-size: .7rem;
+
+    color: #999f99;
+
+}
+
+.camino-perfil strong {
+
+    color: #454b45;
+
+    font-size: .9rem;
+
+}
+
+
+/* =======================================================
+   PERFIL DE ELEVACIÓN
+======================================================= */
+
+.elevacion-container {
+
+    position: relative;
+
+    width: min(900px, 100%);
+
+    height: 430px;
+
+    margin: 2rem auto 0;
+
+}
+
+.elevacion-svg {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: visible;
+
+}
+
+
+/* =======================================================
+   LÍNEAS DEL PERFIL
+======================================================= */
+
+.segmento {
+
+    fill: none;
+
+    stroke: #6c8fa3;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+
+    vector-effect: non-scaling-stroke;
+
+    stroke-dasharray: 100;
+
+    stroke-dashoffset: 100;
+
+    animation: dibujarSegmento .8s ease-out forwards;
+
+}
+
+.segmento-1 {
+    animation-delay: .2s;
+}
+
+.segmento-2 {
+    animation-delay: 1s;
+}
+
+.segmento-3 {
+    animation-delay: 1.8s;
+}
+
+.segmento-4 {
+    animation-delay: 2.6s;
+}
+
+@keyframes dibujarSegmento {
+
+    to {
+        stroke-dashoffset: 0;
+    }
+
+}
+
+
+/* =======================================================
+   ETIQUETAS ELEVACIÓN
+======================================================= */
+
+.elevacion-label {
+
+    position: absolute;
+
+    left: 0;
+
+    font-size: .6rem;
+
+    letter-spacing: .12em;
+
+    color: #b0b5b0;
+
+}
+
+.elevacion-alta {
+    top: 4%;
+}
+
+.elevacion-baja {
+    bottom: 4%;
+}
+
+
+/* =======================================================
+   PUNTOS
+======================================================= */
+
+.etapas-elevacion {
+
+    position: absolute;
+
+    inset: 0;
+
+}
+
+.etapa-punto {
+
+    position: absolute;
+
+    transform: translate(-50%, -50%);
+
+    width: 30px;
+
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    transition: opacity .4s ease;
+
+}
+
+.etapa-punto.visible {
+
+    opacity: 1;
+
+}
+
+
+/* =======================================================
+   PUNTO
+======================================================= */
+
+.punto-etapa {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 14px;
+
+    height: 14px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border: 3px solid #6c8fa3;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,.12);
+
+}
+
+
+/* =======================================================
+   ETAPA COMPLETADA
+======================================================= */
+
+.etapa-punto.completada .punto-etapa {
+
+    background: #6c8fa3;
+
+}
+
+
+/* =======================================================
+   ETAPA ACTUAL
+======================================================= */
+
+.etapa-punto.actual {
+
+    z-index: 5;
+
+}
+
+.etapa-punto.actual .punto-etapa {
+
+    width: 18px;
+
+    height: 18px;
+
+    border-color: #4e7187;
+
+    animation: pulso 2s ease-in-out infinite;
+
+}
+
+@keyframes pulso {
+
+    0%, 100% {
+        box-shadow:
+            0 0 0 0 rgba(108,143,163,.25),
+            0 3px 10px rgba(0,0,0,.12);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 10px rgba(108,143,163,0),
+            0 3px 10px rgba(0,0,0,.12);
+    }
+
+}
+
+
+/* =======================================================
+   AVATAR DE LA ETAPA ACTUAL
+======================================================= */
+
+.avatar-etapa {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 25px;
+
+    transform: translateX(-50%);
+
+    width: 52px;
+
+    height: 52px;
+
+    padding: 3px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow: 0 5px 18px rgba(0,0,0,.14);
+
+    animation: aparecerAvatar .7s ease-out .1s both;
+
+}
+
+.avatar-etapa img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+}
+
+@keyframes aparecerAvatar {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(10px)
+            scale(.7);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =======================================================
+   INFORMACIÓN DE ETAPA
+======================================================= */
+
+.etapa-info {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 25px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 150px;
+
+    text-align: center;
+
+}
+
+.etapa-info strong {
+
+    font-size: .78rem;
+
+    color: #49534b;
+
+}
+
+.etapa-info span {
+
+    margin-top: .2rem;
+
+    font-size: .68rem;
+
+    line-height: 1.25;
+
+    color: #8a918a;
+
+}
+
+.etapa-info small {
+
+    margin-top: .2rem;
+
+    font-size: .62rem;
+
+    color: #adb2ad;
+
+}
+
+
+/* =======================================================
+   ESTADO
+======================================================= */
+
+.camino-estado {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: .5rem;
+
+    margin-top: 1rem;
+
+    color: #777e77;
+
+}
+
+.camino-estado p {
+
+    margin: 0;
+
+    font-size: .9rem;
+
+}
+
+.camino-estado strong {
+
+    color: #4e7187;
+
+}
+
+.estado-punto {
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #6c8fa3;
+
+}
+
+
+/* =======================================================
+   FOOTER
+======================================================= */
+
+.camino-footer {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: .6rem;
+
+    margin-top: 2rem;
+
+    color: #a0a6a0;
+
+    font-size: .72rem;
+
+}
+
+
+/* =======================================================
+   MÓVIL
+======================================================= */
+
+@media (max-width: 600px) {
+
+    .camino-page {
+
+        padding-top: 2rem;
+
+    }
+
+    .camino-header h1 {
+
+        font-size: 2rem;
+
+    }
+
+    .camino-subtitle {
+
+        font-size: .9rem;
+
+    }
+
+    .elevacion-container {
+
+        height: 420px;
+
+        margin-top: 1rem;
+
+    }
+
+    .etapa-info {
+
+        width: 120px;
+
+    }
+
+    .etapa-info strong {
+
+        font-size: .72rem;
+
+    }
+
+    .etapa-info span {
+
+        font-size: .62rem;
+
+    }
+
+    .etapa-info small {
+
+        font-size: .58rem;
+
+    }
+
+    .camino-footer {
+
+        flex-wrap: wrap;
+
+    }
+
+}
