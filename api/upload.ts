@@ -1,85 +1,71 @@
-import {
-    handleUpload,
-    type HandleUploadBody
-} from "@vercel/blob/client";
+import { handleUpload } from "@vercel/blob/client";
 
-export default async function handler(
-    request: Request
-) {
+export default {
+    async fetch(request: Request) {
 
-    try {
+        console.log("🔥 /api/upload RECIBIDO");
 
-        const body =
-            await request.json() as HandleUploadBody;
+        try {
 
-        const jsonResponse = await handleUpload({
+            const body = await request.json();
 
-            body,
+            console.log("Body recibido");
 
-            request,
+            const response = await handleUpload({
+                body,
+                request,
 
-            onBeforeGenerateToken: async () => {
+                onBeforeGenerateToken: async () => {
 
-                return {
+                    console.log("Generando token");
 
-                    allowedContentTypes: [
-                        "image/jpeg",
-                        "image/png",
-                        "image/webp"
-                    ],
+                    return {
+                        allowedContentTypes: [
+                            "image/jpeg",
+                            "image/png",
+                            "image/webp"
+                        ],
+                        maximumSizeInBytes: 10 * 1024 * 1024,
+                        addRandomSuffix: true
+                    };
 
-                    maximumSizeInBytes:
-                        10 * 1024 * 1024,
+                },
 
-                    addRandomSuffix: true
+                onUploadCompleted: async ({ blob }) => {
 
-                };
+                    console.log(
+                        "✅ Foto subida:",
+                        blob.url
+                    );
 
-            },
-
-            onUploadCompleted: async ({ blob }) => {
-
-                console.log(
-                    "Foto subida:",
-                    blob.url
-                );
-
-            }
-
-        });
-
-        return new Response(
-            JSON.stringify(jsonResponse),
-            {
-                status: 200,
-                headers: {
-                    "Content-Type": "application/json"
                 }
-            }
-        );
 
-    } catch (error) {
+            });
 
-        console.error(
-            "ERROR VERCEL BLOB:",
-            error
-        );
+            console.log("Respuesta enviada");
 
-        return new Response(
-            JSON.stringify({
-                error:
-                    error instanceof Error
-                        ? error.message
-                        : "Error desconocido"
-            }),
-            {
-                status: 500,
-                headers: {
-                    "Content-Type": "application/json"
+            return response;
+
+        } catch (error) {
+
+            console.error("ERROR:", error);
+
+            return new Response(
+                JSON.stringify({
+                    error:
+                        error instanceof Error
+                            ? error.message
+                            : String(error)
+                }),
+                {
+                    status: 500,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 }
-            }
-        );
+            );
+
+        }
 
     }
-
-}
+};
