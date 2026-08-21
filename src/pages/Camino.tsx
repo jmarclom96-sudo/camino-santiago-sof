@@ -157,7 +157,7 @@ export default function Camino() {
 
                 <div className="etapas-elevacion">
 
-                    {etapas.map((etapa, index) => {
+                    {etapas.map((etapa) => {
 
                         const esActual = etapa.id === etapaActual;
                         const completada = etapa.id < etapaActual;
