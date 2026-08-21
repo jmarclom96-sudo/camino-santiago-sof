@@ -3,26 +3,14 @@ import {
     type HandleUploadBody
 } from "@vercel/blob/client";
 
-export default async function handler(request: Request) {
-
-    if (request.method !== "POST") {
-
-        return new Response(
-            JSON.stringify({
-                error: "Método no permitido"
-            }),
-            {
-                status: 405,
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
-        );
-    }
-
-    const body = await request.json() as HandleUploadBody;
+export default async function handler(
+    request: Request
+) {
 
     try {
+
+        const body =
+            await request.json() as HandleUploadBody;
 
         const jsonResponse = await handleUpload({
 
@@ -40,7 +28,8 @@ export default async function handler(request: Request) {
                         "image/webp"
                     ],
 
-                    maximumSizeInBytes: 10 * 1024 * 1024,
+                    maximumSizeInBytes:
+                        10 * 1024 * 1024,
 
                     addRandomSuffix: true
 
@@ -51,7 +40,7 @@ export default async function handler(request: Request) {
             onUploadCompleted: async ({ blob }) => {
 
                 console.log(
-                    "Foto subida correctamente:",
+                    "Foto subida:",
                     blob.url
                 );
 
@@ -59,19 +48,38 @@ export default async function handler(request: Request) {
 
         });
 
-        return Response.json(jsonResponse);
+        return new Response(
+            JSON.stringify(jsonResponse),
+            {
+                status: 200,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
 
     } catch (error) {
 
-        console.error("Error en Blob:", error);
+        console.error(
+            "ERROR VERCEL BLOB:",
+            error
+        );
 
-        return Response.json(
+        return new Response(
+            JSON.stringify({
+                error:
+                    error instanceof Error
+                        ? error.message
+                        : "Error desconocido"
+            }),
             {
-                error: "Error al subir la imagen"
-            },
-            {
-                status: 400
+                status: 500,
+                headers: {
+                    "Content-Type": "application/json"
+                }
             }
         );
+
     }
+
 }
