@@ -15,6 +15,7 @@ export default function Navbar() {
     const [mostrarLogin, setMostrarLogin] = useState(false);
 
     return (
+        <>
 
         <nav className="navbar">
 
@@ -63,16 +64,20 @@ export default function Navbar() {
 
         </nav>
 
+        {mostrarLogin && (
+                <LoginModal
+                    onLogin={(perfilLogueado) => {
+                        setPerfil(perfilLogueado);
+                        setMostrarLogin(false);
+                    }}
+                    onClose={() => setMostrarLogin(false)}
+                />
+            )}
+        </>
+    
+
     );
 
-    {mostrarLogin && (
-    <LoginModal
-        onLogin={(perfilLogueado) => {
-            setPerfil(perfilLogueado);
-            setMostrarLogin(false);
-        }}
-        onClose={() => setMostrarLogin(false)}
-    />
-)}
+    
 
 }
