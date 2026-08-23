@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { getPerfilActual } from "../services/perfilService";
+import LoginModal from "../components/LoginModal";
 import vieira from "../assets/logo.png";
 import "./Navbar.css";
 
@@ -9,6 +11,9 @@ export default function Navbar() {
 
     const cerrarMenu = () => setMenuOpen(false);
 
+    const [perfil, setPerfil] = useState(getPerfilActual());
+    const [mostrarLogin, setMostrarLogin] = useState(false);
+
     return (
 
         <nav className="navbar">
@@ -17,6 +22,21 @@ export default function Navbar() {
                 <img src={vieira} alt="Vieira" />
                 <span>Camino González Sánchez</span>
             </h2>
+
+            <button
+                className="navbar-profile"
+                onClick={() => setMostrarLogin(true)}
+                aria-label={perfil ? `Perfil de ${perfil.nombre}` : "Identificarse"}
+            >
+                {perfil ? (
+                    <img
+                        src={perfil.foto}
+                        alt={perfil.nombre}
+                    />
+                ) : (
+                    <span>👤</span>
+                )}
+            </button>
 
             <button
                 className="menu-btn"
@@ -44,5 +64,15 @@ export default function Navbar() {
         </nav>
 
     );
+
+    {mostrarLogin && (
+    <LoginModal
+        onLogin={(perfilLogueado) => {
+            setPerfil(perfilLogueado);
+            setMostrarLogin(false);
+        }}
+        onClose={() => setMostrarLogin(false)}
+    />
+)}
 
 }
