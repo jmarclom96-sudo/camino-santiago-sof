@@ -118,14 +118,6 @@ export default function Camino() {
 
             <div className="elevacion-container">
 
-                <div className="elevacion-label elevacion-alta">
-                    MÁS ALTO
-                </div>
-
-                <div className="elevacion-label elevacion-baja">
-                    SANTIAGO
-                </div>
-
 
                 <svg
                     className="elevacion-svg"

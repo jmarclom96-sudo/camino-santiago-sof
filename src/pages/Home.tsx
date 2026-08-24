@@ -54,7 +54,7 @@ export default function Home() {
                     <p>Consulta el plan de cada día.</p>
                 </Link>
 
-                <Link to="/etapas" className="card">
+                <Link to="/etapas/1" className="card">
                     <h3>🥾 Etapas</h3>
                     <p>Descubre cada recorrido.</p>
                 </Link>
@@ -62,11 +62,6 @@ export default function Home() {
                 <Link to="/retos" className="card">
                     <h3>🎯 Retos</h3>
                     <p>Completa desafíos durante el viaje.</p>
-                </Link>
-
-                <Link to="/fotos" className="card">
-                    <h3>📷 Fotos</h3>
-                    <p>Revive los mejores momentos.</p>
                 </Link>
 
             </div>
