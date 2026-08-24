@@ -21,7 +21,6 @@ export default {
                         titulo,
                         descripcion
                     FROM bingo
-                    WHERE activo = true
                     ORDER BY numero
                 `;
 
