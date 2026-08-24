@@ -313,44 +313,30 @@ export default function Retos() {
                 PESTAÑAS
             ================================== */}
 
-            <div className="retos-tabs">
+            <div className="tabs">
 
-                <button
-                    className={
-                        pestana === "fotos"
-                            ? "active"
-                            : ""
-                    }
-                    onClick={() => setPestana("fotos")}
-                >
-                    📸 Fotos
-                </button>
+            <button
+                className={pestana === "fotos" ? "tab active" : "tab"}
+                onClick={() => setPestana("fotos")}
+            >
+                📸 Fotos
+            </button>
 
+            <button
+                className={pestana === "bingo" ? "tab active" : "tab"}
+                onClick={() => setPestana("bingo")}
+            >
+                🎲 Bingo
+            </button>
 
-                <button
-                    className={
-                        pestana === "bingo"
-                            ? "active"
-                            : ""
-                    }
-                    onClick={() => setPestana("bingo")}
-                >
-                    🎲 Bingo
-                </button>
+            <button
+                className={pestana === "secreta" ? "tab active" : "tab"}
+                onClick={() => setPestana("secreta")}
+            >
+                🔒 Misión Secreta
+            </button>
 
-
-                <button
-                    className={
-                        pestana === "secreta"
-                            ? "active"
-                            : ""
-                    }
-                    onClick={() => setPestana("secreta")}
-                >
-                    🔒 Secreta
-                </button>
-
-            </div>
+        </div>
 
 
             {/* ==================================
@@ -898,11 +884,6 @@ export default function Retos() {
 
                     <p>
                         Esta misión todavía no está disponible.
-                    </p>
-
-                    <p>
-                        🤫 Solo los organizadores saben
-                        cuándo aparecerá...
                     </p>
 
                 </div>
