@@ -32,7 +32,7 @@ export default {
                         u.nombre,
                         u.usuario,
                         u.foto AS avatar
-                    FROM bingo_usuarios bu
+                    FROM bingo_completados bu
                     INNER JOIN usuarios u
                         ON u.id = bu.usuario_id
                     ORDER BY bu.bingo_id, bu.usuario_id
@@ -76,7 +76,7 @@ export default {
 
 
                 const resultado = await sql`
-                    INSERT INTO bingo_usuarios (
+                    INSERT INTO bingo_completados (
                         bingo_id,
                         usuario_id
                     )
@@ -126,7 +126,7 @@ export default {
 
 
                 await sql`
-                    DELETE FROM bingo_usuarios
+                    DELETE FROM bingo_completados
                     WHERE bingo_id = ${bingoId}
                     AND usuario_id = ${usuarioId}
                 `;
