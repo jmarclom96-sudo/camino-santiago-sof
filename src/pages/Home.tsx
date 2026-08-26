@@ -64,6 +64,11 @@ export default function Home() {
                     <p>Completa desafíos durante el viaje.</p>
                 </Link>
 
+                <Link to="/fotos" className="card">
+                    <h3>📷 Fotos</h3>
+                    <p>Revive los mejores momentos.</p>
+                </Link>
+
             </div>
 
         </div>
