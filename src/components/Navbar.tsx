@@ -50,6 +50,8 @@ export default function Navbar() {
 
                 <Link to="/" onClick={cerrarMenu}>Inicio</Link>
 
+                <Link to="/historia" onClick={cerrarMenu}>Historia</Link>
+
                 <Link to="/itinerario" onClick={cerrarMenu}>Itinerario</Link>
 
                 <Link to="/reflexiones" onClick={cerrarMenu}>Reflexiones</Link>
@@ -58,7 +60,6 @@ export default function Navbar() {
 
                 <Link to="/fotos" onClick={cerrarMenu}>Fotos</Link>
 
-                <Link to="/historia" onClick={cerrarMenu}>Historia</Link>
 
             </div>
 
