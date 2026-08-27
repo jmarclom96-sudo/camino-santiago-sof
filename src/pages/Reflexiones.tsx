@@ -1,6 +1,6 @@
 import "./Home.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { getPerfilActual } from "../services/perfilService";
 import { getEtapas } from "../services/etapaService";
