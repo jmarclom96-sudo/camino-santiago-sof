@@ -20,6 +20,11 @@ import {
     type BingoCompletado
 } from "../services/bingoService";
 
+import {
+    getMisionSecreta,
+    type MisionSecreta
+} from "../services/misionService";
+
 import { getPerfilActual } from "../services/perfilService";
 
 
@@ -50,6 +55,12 @@ export default function Retos() {
 
     const [cargandoBingo, setCargandoBingo] =
         useState(false);
+
+    const [misionSecreta, setMisionSecreta] =
+    useState<MisionSecreta | null>(null);
+
+    const [cargandoMision, setCargandoMision] =
+    useState(false);
 
 
     // ==========================================
@@ -130,6 +141,45 @@ export default function Retos() {
     cargarBingo();
 
 }, [pestana]);
+
+useEffect(() => {
+
+    if (pestana !== "secreta" || !perfil) {
+        return;
+    }
+
+    const usuarioId = perfil.id;
+
+    async function cargarMision() {
+
+        try {
+
+            setCargandoMision(true);
+
+            const mision =
+                await getMisionSecreta(usuarioId);
+
+            setMisionSecreta(mision);
+
+        } catch (error) {
+
+            console.error(error);
+
+            setMensaje(
+                "No se ha podido cargar la misión secreta."
+            );
+
+        } finally {
+
+            setCargandoMision(false);
+
+        }
+
+    }
+
+    cargarMision();
+
+}, [pestana, perfil]);
 
 
     // ==========================================
@@ -876,19 +926,64 @@ export default function Retos() {
 
             {pestana === "secreta" && (
 
-                <div className="card">
+        <div className="card">
 
-                    <h2>
-                        🔒 Misión secreta
-                    </h2>
+            <h2>🔒 Misión secreta</h2>
 
+            {!perfil && (
+
+                <>
                     <p>
-                        Esta misión todavía no está disponible.
+                        Identifícate para descubrir tu misión secreta.
                     </p>
-
-                </div>
+                </>
 
             )}
+
+            {perfil && cargandoMision && (
+
+                <p>
+                    Cargando misión...
+                </p>
+
+            )}
+
+            {perfil && !cargandoMision && misionSecreta && (
+
+                <>
+                    {misionSecreta.activa ? (
+
+                        <>
+                            <h3>
+                                {misionSecreta.titulo}
+                            </h3>
+
+                            <p>
+                                {misionSecreta.descripcion}
+                            </p>
+                        </>
+
+                    ) : (
+
+                        <>
+                            <p>
+                                Esta misión todavía no está disponible.
+                            </p>
+
+                            <p>
+                                🤫 Solo los organizadores saben
+                                cuándo aparecerá...
+                            </p>
+                        </>
+
+                    )}
+                </>
+
+            )}
+
+        </div>
+
+    )}
 
         </div>
 
