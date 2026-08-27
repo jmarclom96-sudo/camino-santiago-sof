@@ -3,14 +3,11 @@ import "./Home.css";
 import { useState } from "react";
 
 import { getPerfilActual } from "../services/perfilService";
-import { getEtapas } from "../services/etapaService";
 
 import ReflexionCard from "../components/ReflexionCard";
 import LoginModal from "../components/LoginModal";
 
 export default function Reflexiones() {
-
-    const etapas = getEtapas();
 
     const [mostrarLogin, setMostrarLogin] = useState(false);
 
@@ -47,16 +44,74 @@ export default function Reflexiones() {
 
             <div className="cards">
 
-                {etapas.map(etapa => (
+                {/* PRE-CAMINO */}
 
-                    <ReflexionCard
-                        key={etapa.id}
-                        id={etapa.id}
-                        dia={etapa.dia}
-                        ruta={etapa.ruta}
-                    />
+                <ReflexionCard
+                    key="pre"
+                    id={-1}
+                    dia={0}
+                    ruta="Pre-Camino"
+                />
 
-                ))}
+
+                {/* ETAPA 1 */}
+
+                <ReflexionCard
+                    key="etapa-1"
+                    id={1}
+                    dia={1}
+                    ruta="Etapa 1"
+                />
+
+
+                {/* ETAPA 2 */}
+
+                <ReflexionCard
+                    key="etapa-2"
+                    id={2}
+                    dia={2}
+                    ruta="Etapa 2"
+                />
+
+
+                {/* ETAPA 3 */}
+
+                <ReflexionCard
+                    key="etapa-3"
+                    id={3}
+                    dia={3}
+                    ruta="Etapa 3"
+                />
+
+
+                {/* ETAPA 4 */}
+
+                <ReflexionCard
+                    key="etapa-4"
+                    id={4}
+                    dia={4}
+                    ruta="Etapa 4"
+                />
+
+
+                {/* ETAPA 5 */}
+
+                <ReflexionCard
+                    key="etapa-5"
+                    id={5}
+                    dia={5}
+                    ruta="Etapa 5"
+                />
+
+
+                {/* POST-CAMINO */}
+
+                <ReflexionCard
+                    key="post"
+                    id={-2}
+                    dia={6}
+                    ruta="Post-Camino"
+                />
 
             </div>
 

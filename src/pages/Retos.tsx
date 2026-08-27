@@ -155,6 +155,7 @@ useEffect(() => {
         try {
 
             setCargandoMision(true);
+            setMisionSecreta(null);
 
             const mision =
                 await getMisionSecreta(usuarioId);
@@ -179,7 +180,7 @@ useEffect(() => {
 
     cargarMision();
 
-}, [pestana, perfil]);
+}, [pestana, perfil?.id]);
 
 
     // ==========================================

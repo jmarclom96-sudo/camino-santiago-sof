@@ -1,76 +1,228 @@
 import "./Home.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { upload } from "@vercel/blob/client";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+
+import { getPerfilActual } from "../services/perfilService";
+
+import {
+    getFotos,
+    guardarFoto,
+    type Foto
+} from "../services/fotoService";
+
 
 export default function Fotos() {
 
-    const [foto, setFoto] = useState<File | null>(null);
+    const [fotos, setFotos] = useState<Foto[]>([]);
 
-    const [fotoUrl, setFotoUrl] = useState<string | null>(null);
+    const [cargando, setCargando] = useState(true);
 
     const [subiendo, setSubiendo] = useState(false);
 
     const [mensaje, setMensaje] = useState("");
 
+    const perfil = getPerfilActual();
+
+
+    // ==========================
+    // CARGAR FOTOS
+    // ==========================
+
+    useEffect(() => {
+
+        async function cargarFotos() {
+
+            try {
+
+                setCargando(true);
+
+                const fotosObtenidas = await getFotos();
+
+                setFotos(fotosObtenidas);
+
+            } catch (error) {
+
+                console.error(error);
+
+                setMensaje(
+                    "No se han podido cargar las fotos."
+                );
+
+            } finally {
+
+                setCargando(false);
+
+            }
+
+        }
+
+        cargarFotos();
+
+    }, []);
+
+
+    // ==========================
+    // SUBIR FOTO
+    // ==========================
 
     async function subirFoto() {
 
-        if (!foto) {
+        if (!perfil) {
 
-            setMensaje("Selecciona una foto primero.");
+            setMensaje(
+                "Necesitas identificarte para subir una foto."
+            );
 
             return;
 
         }
 
-        try {
 
-            setSubiendo(true);
+        const input = document.createElement("input");
 
-            setMensaje("Subiendo foto...");
+        input.type = "file";
 
-
-            const blob = await upload(
-
-                foto.name,
-
-                foto,
-
-                {
-
-                    access: "public",
-
-                    handleUploadUrl: "/api/upload"
-
-                }
-
-            );
+        input.accept =
+            "image/jpeg,image/png,image/webp";
 
 
-            console.log("Foto subida:", blob);
+        input.onchange = async () => {
 
-            setFotoUrl(blob.url);
+            const file = input.files?.[0];
 
-            setMensaje("¡Foto subida correctamente!");
+            if (!file) {
+                return;
+            }
 
 
-        } catch (error) {
+            try {
 
-            console.error(error);
+                setSubiendo(true);
 
-            setMensaje(
-                "Ha ocurrido un error al subir la foto."
-            );
+                setMensaje("Subiendo foto...");
 
-        } finally {
 
-            setSubiendo(false);
+                // ==========================
+                // SUBIR A VERCEL BLOB
+                // ==========================
 
-        }
+                const blob = await upload(
+
+                    file.name,
+
+                    file,
+
+                    {
+                        access: "public",
+                        handleUploadUrl: "/api/upload"
+                    }
+
+                );
+
+
+                // ==========================
+                // GUARDAR EN NEON
+                // ==========================
+
+                const nuevaFoto = await guardarFoto(
+                    perfil.id,
+                    blob.url
+                );
+
+
+                // Añadimos los datos del usuario
+                // para mostrarla inmediatamente.
+
+                setFotos(
+                    fotosActuales => [
+
+                        {
+                            ...nuevaFoto,
+                            nombre: perfil.nombre,
+                            usuario: perfil.usuario,
+                            avatar: perfil.foto
+                        },
+
+                        ...fotosActuales
+
+                    ]
+                );
+
+
+                setMensaje(
+                    "¡Foto subida correctamente!"
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                setMensaje(
+
+                    error instanceof Error
+                        ? error.message
+                        : "Ha ocurrido un error al subir la foto."
+
+                );
+
+            } finally {
+
+                setSubiendo(false);
+
+            }
+
+        };
+
+
+        input.click();
 
     }
+
+
+    // ==========================
+    // CARGANDO
+    // ==========================
+
+    if (cargando) {
+
+        return (
+
+            <div className="cards">
+
+                <div className="card">
+
+                    <p>
+                        Cargando fotos...
+                    </p>
+
+                </div>
+
+            </div>
+
+        );
+
+    }
+
+
+    // ==========================
+    // ÚLTIMA FOTO
+    // ==========================
+
+    const ultimaFoto = fotos[0];
+
+
+    // ==========================
+    // CARRUSEL ALEATORIO
+    // ==========================
+
+    const fotosAleatorias = [...fotos]
+        .sort(() => Math.random() - 0.5);
 
 
     return (
@@ -78,57 +230,21 @@ export default function Fotos() {
         <div className="cards">
 
 
-            {/* GALERÍA */}
+            {/* ==========================
+                CABECERA
+            ========================== */}
 
             <div className="card">
 
-                <h2>📷 Galería</h2>
+                <h1>
+                    📸 Fotos del Camino
+                </h1>
 
                 <p>
-                    Aquí aparecerán las fotos del viaje.
+                    Comparte los momentos que vayas
+                    viviendo durante el Camino.
                 </p>
 
-
-                {fotoUrl && (
-
-                    <img
-                        src={fotoUrl}
-                        alt="Foto subida"
-                        style={{
-                            width: "100%",
-                            maxWidth: "500px",
-                            marginTop: "1rem",
-                            borderRadius: "12px"
-                        }}
-                    />
-
-                )}
-
-            </div>
-
-
-            {/* SUBIR FOTO */}
-
-            <div className="card">
-
-                <h2>⬆️ Subir una foto</h2>
-
-                <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    onChange={(e) => {
-
-                        setFoto(
-                            e.target.files?.[0] ?? null
-                        );
-
-                        setMensaje("");
-
-                    }}
-                />
-
-                <br />
-                <br />
 
                 <button
                     className="btn-primary"
@@ -138,7 +254,7 @@ export default function Fotos() {
 
                     {subiendo
                         ? "Subiendo..."
-                        : "Subir foto"
+                        : "📷 Subir foto"
                     }
 
                 </button>
@@ -146,7 +262,11 @@ export default function Fotos() {
 
                 {mensaje && (
 
-                    <p style={{ marginTop: "1rem" }}>
+                    <p
+                        style={{
+                            marginTop: "1rem"
+                        }}
+                    >
                         {mensaje}
                     </p>
 
@@ -155,42 +275,167 @@ export default function Fotos() {
             </div>
 
 
-            {/* ÚLTIMA SUBIDA */}
+            {/* ==========================
+                ÚLTIMA FOTO
+            ========================== */}
 
-            <div className="card">
+            {ultimaFoto && (
 
-                <h2>🌄 Última subida</h2>
+                <div className="card">
 
-                {fotoUrl ? (
+                    <h2>
+                        ⭐ Última foto
+                    </h2>
 
-                    <>
 
-                        <p>
-                            Foto almacenada correctamente.
-                        </p>
+                    <div>
 
                         <img
-                            src={fotoUrl}
-                            alt="Última subida"
+                            src={ultimaFoto.blob_url}
+                            alt={`Foto de ${ultimaFoto.nombre}`}
                             style={{
                                 width: "100%",
-                                maxWidth: "500px",
-                                borderRadius: "12px"
+                                borderRadius: "12px",
+                                display: "block"
                             }}
                         />
 
-                    </>
+
+                        <p>
+
+                            👤 <strong>
+                                {ultimaFoto.nombre}
+                            </strong>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            )}
+
+
+            {/* ==========================
+                CARRUSEL
+            ========================== */}
+
+            {fotos.length > 0 && (
+
+                <div className="card">
+
+                    <h2>
+                        📸 Momentos del Camino
+                    </h2>
+
+
+                    <Swiper
+                        spaceBetween={20}
+                        slidesPerView={1}
+                        loop={fotos.length > 1}
+                    >
+
+                        {fotosAleatorias.map(foto => (
+
+                            <SwiperSlide
+                                key={foto.id}
+                            >
+
+                                <div>
+
+                                    <img
+                                        src={foto.blob_url}
+                                        alt={`Foto de ${foto.nombre}`}
+                                        style={{
+                                            width: "100%",
+                                            maxHeight: "500px",
+                                            objectFit: "cover",
+                                            borderRadius: "12px",
+                                            display: "block"
+                                        }}
+                                    />
+
+
+                                    <p
+                                        style={{
+                                            textAlign: "center"
+                                        }}
+                                    >
+
+                                        👤 <strong>
+                                            {foto.nombre}
+                                        </strong>
+
+                                    </p>
+
+                                </div>
+
+                            </SwiperSlide>
+
+                        ))}
+
+                    </Swiper>
+
+                </div>
+
+            )}
+
+
+            {/* ==========================
+                ÁLBUM
+            ========================== */}
+
+            <div className="card">
+
+                <h2>
+                    🖼️ Álbum
+                </h2>
+
+
+                {fotos.length === 0 ? (
+
+                    <p>
+                        Todavía no hay fotos.
+                    </p>
 
                 ) : (
 
-                    <p>
-                        No hay fotos todavía.
-                    </p>
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns:
+                                "repeat(auto-fill, minmax(140px, 1fr))",
+                            gap: "10px"
+                        }}
+                    >
+
+                        {fotos.map(foto => (
+
+                            <div
+                                key={foto.id}
+                            >
+
+                                <img
+                                    src={foto.blob_url}
+                                    alt={`Foto de ${foto.nombre}`}
+                                    style={{
+                                        width: "100%",
+                                        aspectRatio: "1 / 1",
+                                        objectFit: "cover",
+                                        borderRadius: "10px",
+                                        display: "block"
+                                    }}
+                                />
+
+                            </div>
+
+                        ))}
+
+                    </div>
 
                 )}
 
             </div>
-
 
         </div>
 
