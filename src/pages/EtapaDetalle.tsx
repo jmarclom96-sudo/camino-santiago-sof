@@ -129,26 +129,18 @@ export default function EtapaDetalle() {
                         <div className="itinerario">
 
                             {contenido.itinerario.map((parrafo, index) => (
-                                <p key={index}>
+                            <div className="itinerario-paso" key={index}>
+
+                                <div className="itinerario-numero">
+                                    {index + 1}
+                                </div>
+
+                                <p>
                                     {parrafo}
                                 </p>
-                            ))}
 
-                        </div>
-                    )}
-
-                    {tab === "perfil" && (
-                        <div className="perfil">
-
-                            {contenido.perfil ? (
-                                <p>
-                                    Aquí irá el perfil de elevación.
-                                </p>
-                            ) : (
-                                <p>
-                                    Perfil de elevación próximamente.
-                                </p>
-                            )}
+                            </div>
+                        ))}
 
                         </div>
                     )}
@@ -174,22 +166,6 @@ export default function EtapaDetalle() {
 
                                 </div>
                             ))}
-
-                        </div>
-                    )}
-
-                    {tab === "mapa" && (
-                        <div className="mapa">
-
-                            {contenido.mapa ? (
-                                <p>
-                                    Aquí irá el mapa de la etapa.
-                                </p>
-                            ) : (
-                                <p>
-                                    Mapa próximamente.
-                                </p>
-                            )}
 
                         </div>
                     )}

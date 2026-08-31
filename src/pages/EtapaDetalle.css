@@ -264,6 +264,32 @@
 
 }
 
+.itinerario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.itinerario-paso {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.itinerario-numero {
+    flex-shrink: 0;
+    width: 18px;
+    color: #999;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.itinerario-paso p {
+    margin: 0;
+    line-height: 1.7;
+    color: #444;
+}
+
 /* =========================
    ¿QUÉ VER?
    ========================= */
