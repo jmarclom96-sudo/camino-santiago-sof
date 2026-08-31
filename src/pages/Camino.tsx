@@ -5,7 +5,7 @@ import { getPerfilActual } from "../services/perfilService";
 
 import "./Camino.css";
 
-const FECHA_INICIO = new Date("2026-09-01");
+const FECHA_INICIO = new Date(2026, 8, 2);
 
 const etapas = [
     {

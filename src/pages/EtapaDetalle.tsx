@@ -94,24 +94,10 @@ export default function EtapaDetalle() {
                     </button>
 
                     <button
-                        className={tab === "perfil" ? "tab active" : "tab"}
-                        onClick={() => setTab("perfil")}
-                    >
-                        Perfil
-                    </button>
-
-                    <button
                         className={tab === "queVer" ? "tab active" : "tab"}
                         onClick={() => setTab("queVer")}
                     >
                         ¿Qué ver?
-                    </button>
-
-                    <button
-                        className={tab === "mapa" ? "tab active" : "tab"}
-                        onClick={() => setTab("mapa")}
-                    >
-                        Mapa
                     </button>
 
                     <button
