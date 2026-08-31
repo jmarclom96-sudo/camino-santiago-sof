@@ -49,7 +49,9 @@ export default function EtapaDetalle() {
                             navigate(`/etapas/${etapaAnterior.id}`)
                         }
                     >
-                        ← {etapaAnterior ? etapaAnterior.ruta.split(" → ")[1] : ""}
+                        ← {etapaAnterior
+                            ? etapaAnterior.ruta.split(" → ")[1]
+                            : ""}
                     </button>
 
                     <button
@@ -160,10 +162,14 @@ export default function EtapaDetalle() {
                                     key={index}
                                 >
 
-                                    <h3>{punto.nombre}</h3>
+                                    <h3>
+                                        • {punto.nombre}
+                                    </h3>
 
                                     {punto.descripcion && (
-                                        <p>{punto.descripcion}</p>
+                                        <p>
+                                            {punto.descripcion}
+                                        </p>
                                     )}
 
                                 </div>
@@ -197,7 +203,9 @@ export default function EtapaDetalle() {
                                     key={index}
                                 >
 
-                                    <h3>{restaurante.nombre}</h3>
+                                    <h3 className="restaurante-nombre">
+                                        {restaurante.nombre}
+                                    </h3>
 
                                     <p className="restaurante-localidad">
                                         {restaurante.localidad}
@@ -217,7 +225,7 @@ export default function EtapaDetalle() {
 
                                     <div className="restaurante-enlaces">
 
-                                        {restaurante.web && (
+                                        {restaurante.web ? (
                                             <a
                                                 href={restaurante.web}
                                                 target="_blank"
@@ -226,9 +234,13 @@ export default function EtapaDetalle() {
                                             >
                                                 Web
                                             </a>
+                                        ) : (
+                                            <span className="restaurante-boton disabled">
+                                                Web
+                                            </span>
                                         )}
 
-                                        {restaurante.maps && (
+                                        {restaurante.maps ? (
                                             <a
                                                 href={restaurante.maps}
                                                 target="_blank"
@@ -237,6 +249,10 @@ export default function EtapaDetalle() {
                                             >
                                                 Maps
                                             </a>
+                                        ) : (
+                                            <span className="restaurante-boton disabled">
+                                                Maps
+                                            </span>
                                         )}
 
                                     </div>

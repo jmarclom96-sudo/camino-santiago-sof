@@ -263,3 +263,105 @@
     }
 
 }
+
+/* =========================
+   ¿QUÉ VER?
+   ========================= */
+
+.que-ver {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.punto-interes {
+    padding: 4px 0;
+}
+
+.punto-interes h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.punto-interes p {
+    margin: 5px 0 0 18px;
+    color: #555;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   DÓNDE COMER
+   ========================= */
+
+.restaurantes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.restaurante-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 16px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+}
+
+.restaurante-nombre {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.restaurante-localidad {
+    margin: 4px 0 10px;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.restaurante-extra {
+    margin: 2px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.restaurante-enlaces {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.restaurante-boton {
+    flex: 1;
+    text-align: center;
+    padding: 7px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.85rem;
+    background: #f8f8f8;
+}
+
+.restaurante-boton:hover {
+    background: #eee;
+}
+
+
+/* =========================
+   MÓVIL
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .restaurantes {
+        grid-template-columns: 1fr;
+    }
+
+}
+

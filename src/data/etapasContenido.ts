@@ -8,8 +8,8 @@ export type Restaurante = {
     localidad: string;
     especialidad?: string;
     nota?: string;
-    web: string;
-    maps: string;
+    web?: string;
+    maps?: string;
 };
 
 export type ContenidoEtapa = {
