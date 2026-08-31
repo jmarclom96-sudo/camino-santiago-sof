@@ -241,8 +241,7 @@ export default function Fotos() {
                 </h1>
 
                 <p>
-                    Comparte los momentos que vayas
-                    viviendo durante el Camino.
+                    Sube aquí tu foto.
                 </p>
 
 

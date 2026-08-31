@@ -48,7 +48,7 @@ export default function Reflexiones() {
 
                 <ReflexionCard
                     key="pre"
-                    id={-1}
+                    id={0}
                     dia={0}
                     ruta="Pre-Camino"
                 />
@@ -108,7 +108,7 @@ export default function Reflexiones() {
 
                 <ReflexionCard
                     key="post"
-                    id={-2}
+                    id={6}
                     dia={6}
                     ruta="Post-Camino"
                 />

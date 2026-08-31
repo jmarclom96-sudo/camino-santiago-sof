@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 
 import { getPerfilActual } from "../services/perfilService";
-import { getReflexion } from "../services/reflexionService";
+import {
+    getReflexion,
+    type Reflexion
+} from "../services/reflexionService";
 
 export default function ReflexionDetalle() {
 
@@ -9,84 +13,300 @@ export default function ReflexionDetalle() {
 
     const perfil = getPerfilActual();
 
+    const [reflexion, setReflexion] =
+        useState<Reflexion | null>(null);
+
+    const [cargando, setCargando] =
+        useState(true);
+
     if (!perfil) {
-    return <Navigate to="/reflexiones" replace />;
-}
+        return <Navigate to="/reflexiones" replace />;
+    }
 
-    const reflexion = getReflexion(
-        perfil.id,
-        Number(etapaId)
-    );
+    const usuarioId = perfil.id;
 
-    if (!reflexion) {
-    return <Navigate to="/reflexiones" replace />;
-}
 
-    return (
+    // ==========================================
+    // CARGAR REFLEXIÓN
+    // ==========================================
 
-        <div className="itinerario-page" style={{background: perfil.background}}>
+    useEffect(() => {
 
-        <div className="detalle-etapa">
+        async function cargarReflexion() {
 
-        <div className="tab-content"style={{borderTop: `5px solid ${perfil.color}`}}>
+            try {
 
-            <h1 style={{color: perfil.color}}>{reflexion.titulo}</h1>
+                setCargando(true);
+                setReflexion(null);
 
-            <p className="descripcion">
-                {reflexion.texto}
-            </p>
+                const datos = await getReflexion(
+                    usuarioId,
+                    Number(etapaId)
+                );
 
-            <div className="preguntas" style={{borderLeft: `4px solid ${perfil.color}`}}>
+                setReflexion(datos);
 
-                <h2>Mientras caminas</h2>
+            } catch (error) {
 
-                <ul>
+                console.error(
+                    "ERROR CARGANDO REFLEXIÓN:",
+                    error
+                );
 
-                    {reflexion.preguntas.map((pregunta, index) => (
+                setReflexion(null);
 
-                        <li key={index}>
-                            {pregunta}
-                        </li>
+            } finally {
 
-                    ))}
+                setCargando(false);
 
-                </ul>
+            }
 
-            </div>
+        }
 
-            <img
-                src={reflexion.foto}
-                alt={reflexion.titulo}
-                className="reflexion-imagen"
-            />
+        cargarReflexion();
 
+    }, [usuarioId, etapaId]);
+
+
+    // ==========================================
+    // CARGANDO
+    // ==========================================
+
+    if (cargando) {
+
+        return (
             <div
+                className="itinerario-page"
                 style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "2rem"
+                    background: perfil.background
                 }}
             >
 
-                <Link
-                    to="/reflexiones"
-                    className="btn-secondary"
+                <div className="detalle-etapa">
+
+                    <div className="tab-content">
+
+                        <p>
+                            Cargando reflexión...
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        );
+
+    }
+
+
+    // ==========================================
+    // NO ENCONTRADA
+    // ==========================================
+
+    if (!reflexion) {
+        return <Navigate to="/reflexiones" replace />;
+    }
+
+
+    // ==========================================
+    // RENDER
+    // ==========================================
+
+    return (
+
+        <div
+            className="itinerario-page"
+            style={{
+                background: perfil.background
+            }}
+        >
+
+            <div className="detalle-etapa">
+
+                <div
+                    className="tab-content"
                     style={{
-                        borderColor: perfil.color,
-                        color: perfil.color
+                        borderTop:
+                            `5px solid ${perfil.color}`
                     }}
                 >
-                    ← Volver
-                </Link>
+
+                    {/* ==================================
+                        TÍTULO
+                    ================================== */}
+
+                    <h1
+                        style={{
+                            color: perfil.color
+                        }}
+                    >
+                        {reflexion.titulo}
+                    </h1>
+
+
+                    {/* ==================================
+                        EVANGELIO
+                    ================================== */}
+
+                    {reflexion.contenido.evangelio && (
+
+                        <div
+                            style={{
+                                marginBottom: "1.5rem",
+                                fontStyle: "italic"
+                            }}
+                        >
+
+                            <p>
+                                <strong>
+                                    {reflexion.contenido.evangelio.referencia}
+                                </strong>
+                            </p>
+
+                            <p>
+                                «
+                                {reflexion.contenido.evangelio.texto}
+                                »
+                            </p>
+
+                        </div>
+
+                    )}
+
+
+                    {/* ==================================
+                        COMENTARIO
+                    ================================== */}
+
+                    <div className="descripcion">
+
+                        {reflexion.contenido.comentario.map(
+                            (parrafo, index) => (
+
+                                <p key={index}>
+                                    {parrafo}
+                                </p>
+
+                            )
+                        )}
+
+                    </div>
+
+
+                    {/* ==================================
+                        SANTOS
+                    ================================== */}
+
+                    {reflexion.contenido.santos &&
+                        reflexion.contenido.santos.length > 0 && (
+
+                        <div
+                            className="preguntas"
+                            style={{
+                                borderLeft:
+                                    `4px solid ${perfil.color}`
+                            }}
+                        >
+
+                            <h2>Santos</h2>
+
+                            <ul>
+
+                                {reflexion.contenido.santos.map(
+                                    (santo, index) => (
+
+                                        <li key={index}>
+
+                                            <strong>
+                                                {santo.nombre}
+                                            </strong>
+
+                                            {": "}
+
+                                            {santo.frase}
+
+                                        </li>
+
+                                    )
+                                )}
+
+                            </ul>
+
+                        </div>
+
+                    )}
+
+
+                    {/* ==================================
+                        PREGUNTAS
+                    ================================== */}
+
+                    {reflexion.contenido.preguntas &&
+                        reflexion.contenido.preguntas.length > 0 && (
+
+                        <div
+                            className="preguntas"
+                            style={{
+                                borderLeft:
+                                    `4px solid ${perfil.color}`
+                            }}
+                        >
+
+                            <h2>Mientras caminas</h2>
+
+                            <ul>
+
+                                {reflexion.contenido.preguntas.map(
+                                    (pregunta, index) => (
+
+                                        <li key={index}>
+                                            {pregunta}
+                                        </li>
+
+                                    )
+                                )}
+
+                            </ul>
+
+                        </div>
+
+                    )}
+
+
+                    {/* ==================================
+                        VOLVER
+                    ================================== */}
+
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "2rem"
+                        }}
+                    >
+
+                        <Link
+                            to="/reflexiones"
+                            className="btn-secondary"
+                            style={{
+                                borderColor:
+                                    perfil.color,
+                                color:
+                                    perfil.color
+                            }}
+                        >
+                            ← Volver
+                        </Link>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
-
-    </div>
-
-);
+    );
 
 }
