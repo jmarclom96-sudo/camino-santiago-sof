@@ -158,38 +158,36 @@ export default function ReflexionDetalle() {
                             }}
                         >
 
-                            {reflexion.contenido.citas.map(
-                                (cita, index) => (
+                            {reflexion.contenido.citas &&
+                            reflexion.contenido.citas.length > 0 && (
 
-                                    <div
-                                        key={index}
-                                        style={{
-                                            marginBottom: "1.5rem",
-                                            paddingLeft: "1rem",
-                                            borderLeft:
-                                                `4px solid ${perfil.color}`,
-                                            fontStyle: "italic"
-                                        }}
-                                    >
+                            <div
+                                style={{
+                                    marginBottom: "1.5rem"
+                                }}
+                            >
 
-                                        <p
-                                            style={{
-                                                marginBottom: "0.4rem"
-                                            }}
-                                        >
-                                            <strong>
-                                                {cita.referencia}
-                                            </strong>
-                                        </p>
+                                {reflexion.contenido.citas.map(
+                                    (cita, index) => (
 
-                                        <p>
-                                            «{cita.texto}»
-                                        </p>
+                                        <div key={index}>
 
-                                    </div>
+                                            <p>
+                                                <strong>
+                                                    {cita.referencia}
+                                                </strong>
+                                                {" — "}
+                                                «{cita.texto}»
+                                            </p>
 
-                                )
-                            )}
+                                        </div>
+
+                                    )
+                                )}
+
+                            </div>
+
+                        )}
 
                         </div>
 

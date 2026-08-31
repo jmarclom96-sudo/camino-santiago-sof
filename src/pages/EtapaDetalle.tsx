@@ -6,6 +6,8 @@ import {
     getEtapaSiguiente
 } from "../services/etapaService";
 
+import { contenidoEtapas } from "../data/etapasContenido";
+
 import "./EtapaDetalle.css";
 
 export default function EtapaDetalle() {
@@ -13,7 +15,7 @@ export default function EtapaDetalle() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [tab, setTab] = useState("info");
+    const [tab, setTab] = useState("itinerario");
 
     const etapa = getEtapa(Number(id));
 
@@ -23,6 +25,8 @@ export default function EtapaDetalle() {
 
     const etapaAnterior = getEtapaAnterior(etapa.id);
     const etapaSiguiente = getEtapaSiguiente(etapa.id);
+
+    const contenido = contenidoEtapas[etapa.id];
 
     return (
 
@@ -40,16 +44,24 @@ export default function EtapaDetalle() {
 
                     <button
                         disabled={!etapaAnterior}
-                        onClick={() => etapaAnterior && navigate(`/etapas/${etapaAnterior.id}`)}
+                        onClick={() =>
+                            etapaAnterior &&
+                            navigate(`/etapas/${etapaAnterior.id}`)
+                        }
                     >
                         ← {etapaAnterior ? etapaAnterior.ruta.split(" → ")[1] : ""}
                     </button>
 
                     <button
                         disabled={!etapaSiguiente}
-                        onClick={() => etapaSiguiente && navigate(`/etapas/${etapaSiguiente.id}`)}
+                        onClick={() =>
+                            etapaSiguiente &&
+                            navigate(`/etapas/${etapaSiguiente.id}`)
+                        }
                     >
-                        {etapaSiguiente ? etapaSiguiente.ruta.split(" → ")[1] : ""} →
+                        {etapaSiguiente
+                            ? etapaSiguiente.ruta.split(" → ")[1]
+                            : ""} →
                     </button>
 
                 </div>
@@ -73,10 +85,10 @@ export default function EtapaDetalle() {
                 <div className="tabs">
 
                     <button
-                        className={tab === "info" ? "tab active" : "tab"}
-                        onClick={() => setTab("info")}
+                        className={tab === "itinerario" ? "tab active" : "tab"}
+                        onClick={() => setTab("itinerario")}
                     >
-                        Información
+                        Itinerario
                     </button>
 
                     <button
@@ -87,10 +99,10 @@ export default function EtapaDetalle() {
                     </button>
 
                     <button
-                        className={tab === "itinerario" ? "tab active" : "tab"}
-                        onClick={() => setTab("itinerario")}
+                        className={tab === "queVer" ? "tab active" : "tab"}
+                        onClick={() => setTab("queVer")}
                     >
-                        Itinerario
+                        ¿Qué ver?
                     </button>
 
                     <button
@@ -111,34 +123,128 @@ export default function EtapaDetalle() {
 
                 <div className="tab-content">
 
-                    {tab === "info" && (
-                        <p>
-                            Aquí mostraremos la descripción general de la etapa.
-                        </p>
+                    {tab === "itinerario" && (
+                        <div className="itinerario">
+
+                            {contenido.itinerario.map((parrafo, index) => (
+                                <p key={index}>
+                                    {parrafo}
+                                </p>
+                            ))}
+
+                        </div>
                     )}
 
                     {tab === "perfil" && (
-                        <p>
-                            Aquí irá el perfil de elevación.
-                        </p>
+                        <div className="perfil">
+
+                            {contenido.perfil ? (
+                                <p>
+                                    Aquí irá el perfil de elevación.
+                                </p>
+                            ) : (
+                                <p>
+                                    Perfil de elevación próximamente.
+                                </p>
+                            )}
+
+                        </div>
                     )}
 
-                    {tab === "itinerario" && (
-                        <p>
-                            Aquí mostraremos el itinerario detallado.
-                        </p>
+                    {tab === "queVer" && (
+                        <div className="que-ver">
+
+                            {contenido.queVer.map((punto, index) => (
+                                <div
+                                    className="punto-interes"
+                                    key={index}
+                                >
+
+                                    <h3>{punto.nombre}</h3>
+
+                                    {punto.descripcion && (
+                                        <p>{punto.descripcion}</p>
+                                    )}
+
+                                </div>
+                            ))}
+
+                        </div>
                     )}
 
                     {tab === "mapa" && (
-                        <p>
-                            Aquí irá el mapa interactivo.
-                        </p>
+                        <div className="mapa">
+
+                            {contenido.mapa ? (
+                                <p>
+                                    Aquí irá el mapa de la etapa.
+                                </p>
+                            ) : (
+                                <p>
+                                    Mapa próximamente.
+                                </p>
+                            )}
+
+                        </div>
                     )}
 
                     {tab === "comer" && (
-                        <p>
-                            Aquí pondremos recomendaciones para comer.
-                        </p>
+                        <div className="restaurantes">
+
+                            {contenido.dondeComer.map((restaurante, index) => (
+                                <div
+                                    className="restaurante-card"
+                                    key={index}
+                                >
+
+                                    <h3>{restaurante.nombre}</h3>
+
+                                    <p className="restaurante-localidad">
+                                        {restaurante.localidad}
+                                    </p>
+
+                                    {restaurante.especialidad && (
+                                        <p className="restaurante-extra">
+                                            {restaurante.especialidad}
+                                        </p>
+                                    )}
+
+                                    {restaurante.nota && (
+                                        <p className="restaurante-extra">
+                                            {restaurante.nota}
+                                        </p>
+                                    )}
+
+                                    <div className="restaurante-enlaces">
+
+                                        {restaurante.web && (
+                                            <a
+                                                href={restaurante.web}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="restaurante-boton"
+                                            >
+                                                Web
+                                            </a>
+                                        )}
+
+                                        {restaurante.maps && (
+                                            <a
+                                                href={restaurante.maps}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="restaurante-boton"
+                                            >
+                                                Maps
+                                            </a>
+                                        )}
+
+                                    </div>
+
+                                </div>
+                            ))}
+
+                        </div>
                     )}
 
                 </div>
