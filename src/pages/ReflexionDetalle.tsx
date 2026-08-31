@@ -146,34 +146,54 @@ export default function ReflexionDetalle() {
 
 
                     {/* ==================================
-                        EVANGELIO
+                        CITAS
                     ================================== */}
 
-                    {reflexion.contenido.evangelio && (
+                    {reflexion.contenido.citas &&
+                        reflexion.contenido.citas.length > 0 && (
 
                         <div
                             style={{
-                                marginBottom: "1.5rem",
-                                fontStyle: "italic"
+                                marginBottom: "1.5rem"
                             }}
                         >
 
-                            <p>
-                                <strong>
-                                    {reflexion.contenido.evangelio.referencia}
-                                </strong>
-                            </p>
+                            {reflexion.contenido.citas.map(
+                                (cita, index) => (
 
-                            <p>
-                                «
-                                {reflexion.contenido.evangelio.texto}
-                                »
-                            </p>
+                                    <div
+                                        key={index}
+                                        style={{
+                                            marginBottom: "1.5rem",
+                                            paddingLeft: "1rem",
+                                            borderLeft:
+                                                `4px solid ${perfil.color}`,
+                                            fontStyle: "italic"
+                                        }}
+                                    >
+
+                                        <p
+                                            style={{
+                                                marginBottom: "0.4rem"
+                                            }}
+                                        >
+                                            <strong>
+                                                {cita.referencia}
+                                            </strong>
+                                        </p>
+
+                                        <p>
+                                            «{cita.texto}»
+                                        </p>
+
+                                    </div>
+
+                                )
+                            )}
 
                         </div>
 
                     )}
-
 
                     {/* ==================================
                         COMENTARIO
@@ -253,7 +273,7 @@ export default function ReflexionDetalle() {
                             }}
                         >
 
-                            <h2>Mientras caminas</h2>
+                            <h2>Preguntas</h2>
 
                             <ul>
 

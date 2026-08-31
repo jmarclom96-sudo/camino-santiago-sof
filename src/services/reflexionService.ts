@@ -1,15 +1,15 @@
+export type Cita = {
+    referencia: string;
+    texto: string;
+};
+
 export type Santo = {
     nombre: string;
     frase: string;
 };
 
-export type Evangelio = {
-    referencia: string;
-    texto: string;
-};
-
 export type ContenidoReflexion = {
-    evangelio?: Evangelio;
+    citas: Cita[];
     comentario: string[];
     santos: Santo[];
     preguntas: string[];
