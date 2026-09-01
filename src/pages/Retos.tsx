@@ -972,7 +972,7 @@ useEffect(() => {
                             </p>
 
                             <p>
-                                🤫 Solo los organizadores saben
+                                Solo la jefa sabe
                                 cuándo aparecerá...
                             </p>
                         </>
