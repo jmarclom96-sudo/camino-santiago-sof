@@ -187,37 +187,29 @@ export default function EtapaDetalle() {
 
                                     <div className="restaurante-enlaces">
 
-                                        {restaurante.web ? (
-                                            <a
-                                                href={restaurante.web}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="restaurante-boton"
-                                            >
-                                                Web
-                                            </a>
-                                        ) : (
-                                            <span className="restaurante-boton disabled">
-                                                Web
-                                            </span>
-                                        )}
+    {restaurante.web && (
+        <a
+            href={restaurante.web}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="restaurante-boton"
+        >
+            Web
+        </a>
+    )}
 
-                                        {restaurante.maps ? (
-                                            <a
-                                                href={restaurante.maps}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="restaurante-boton"
-                                            >
-                                                Maps
-                                            </a>
-                                        ) : (
-                                            <span className="restaurante-boton disabled">
-                                                Maps
-                                            </span>
-                                        )}
+    {restaurante.maps && (
+        <a
+            href={restaurante.maps}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="restaurante-boton"
+        >
+            Maps
+        </a>
+    )}
 
-                                    </div>
+</div>
 
                                 </div>
                             ))}

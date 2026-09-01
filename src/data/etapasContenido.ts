@@ -67,26 +67,26 @@ export const contenidoEtapas: Record<number, ContenidoEtapa> = {
                 localidad: "Sarria",
                 nota: "Por las noches no abren",
                 web: "",
-                maps: ""
+                maps: "https://maps.app.goo.gl/dEUtDzkut5FSL5it9"
             },
             {
                 nombre: "Restaurante Roma",
                 localidad: "Sarria",
                 especialidad: "Carne",
-                web: "",
-                maps: ""
+                web: "https://hotelroma1930.es/restaurante/",
+                maps: "https://maps.app.goo.gl/WLvM4TjUM54upnJt6"
             },
             {
                 nombre: "Mercadoiro",
                 localidad: "Paradela",
-                web: "",
-                maps: ""
+                web: "http://www.mercadoiro.com/",
+                maps: "https://maps.app.goo.gl/SuptdZRxV4rvkZA26"
             },
             {
                 nombre: "O Mirador",
                 localidad: "Portomarín",
-                web: "",
-                maps: ""
+                web: "http://www.omiradorportomarin.com/",
+                maps: "https://maps.app.goo.gl/rruFsvVijQXTL7jG7"
             }
         ],
 
@@ -129,19 +129,19 @@ export const contenidoEtapas: Record<number, ContenidoEtapa> = {
                 localidad: "Monterroso",
                 especialidad: "Tapa de tortilla de patata",
                 web: "",
-                maps: ""
+                maps: "https://maps.app.goo.gl/nmH863tZkcxsdY3S9"
             },
             {
                 nombre: "Pulpería Casa Camiño",
                 localidad: "Palas de Rei",
-                web: "",
-                maps: ""
+                web: "https://pulperiacasacamino.es/",
+                maps: "https://maps.app.goo.gl/H9fDXgUwGnoHBW9J7"
             },
             {
                 nombre: "A Parada das Bestas",
                 localidad: "Palas de Rei",
-                web: "",
-                maps: ""
+                web: "https://aparadadasbestas.com/#nosa-gastronomia",
+                maps: "https://maps.app.goo.gl/WeMDb4FidnLVmLZj9"
             }
         ],
 
@@ -182,21 +182,21 @@ export const contenidoEtapas: Record<number, ContenidoEtapa> = {
                 nombre: "Pulperia A Garnacha",
                 localidad: "Melide",
                 nota: "Uno de los mejores restaurantes del camino",
-                web: "",
-                maps: ""
+                web: "http://www.pulperiaagarnacha.com/",
+                maps: "https://maps.app.goo.gl/wNnktVuD1c7TmSiJ7"
             },
             {
                 nombre: "Pulpería Ezequiel",
                 localidad: "Melide",
                 nota: "Mejor pulpo de Galicia",
-                web: "",
-                maps: ""
+                web: "https://www.pulperiaezequiel.com/",
+                maps: "https://maps.app.goo.gl/RJT4PAWytggqbTJK9"
             },
             {
                 nombre: "Casa Teodora",
                 localidad: "Arzúa",
-                web: "",
-                maps: ""
+                web: "http://www.casateodora.com/",
+                maps: "https://maps.app.goo.gl/wzKBZx3b9wZQ3uqw7"
             }
         ],
 
@@ -231,14 +231,14 @@ export const contenidoEtapas: Record<number, ContenidoEtapa> = {
                 nombre: "O Ceadoiro",
                 localidad: "O Pino",
                 nota: "La mejor tortilla de Galicia",
-                web: "",
-                maps: ""
+                web: "https://www.facebook.com/OCeadoiro/",
+                maps: "https://maps.app.goo.gl/v9eHhiHhVtQjPvyD6"
             },
             {
                 nombre: "Bar O Pedrouzo",
                 localidad: "Pedrouzo",
                 web: "",
-                maps: ""
+                maps: "https://maps.app.goo.gl/Fozmz4HfGAbJKta69"
             }
         ],
 
@@ -272,44 +272,44 @@ export const contenidoEtapas: Record<number, ContenidoEtapa> = {
             {
                 nombre: "Mesón 42",
                 localidad: "Santiago",
-                web: "",
-                maps: ""
+                web: "https://meson42.com/",
+                maps: "https://maps.app.goo.gl/N871oRzxkPvph2og6"
             },
             {
                 nombre: "A Noiesa",
                 localidad: "Santiago",
-                web: "",
-                maps: ""
+                web: "http://www.anoiesa.com/",
+                maps: "https://maps.app.goo.gl/G1q3e9xRbLnSxTiz8"
             },
             {
                 nombre: "Casa Marcelo",
                 localidad: "Santiago",
-                web: "",
-                maps: ""
+                web: "http://www.casamarcelo.net/",
+                maps: "https://maps.app.goo.gl/aodwNqP6jpaWuJFX8"
             },
             {
                 nombre: "O Gato Negro",
                 localidad: "Santiago",
-                web: "",
-                maps: ""
+                web: "https://ogatonegro.com/",
+                maps: "https://maps.app.goo.gl/S2pV1SFVkpuKutrx8"
             },
             {
                 nombre: "Abasto 2.0",
                 localidad: "Santiago",
-                web: "",
-                maps: ""
+                web: "http://www.abastosdouspuntocero.com/",
+                maps: "https://maps.app.goo.gl/KX2m8Vs5y42guRFt7"
             },
             {
                 nombre: "Mesón do Pulpo",
                 localidad: "Santiago",
                 web: "",
-                maps: ""
+                maps: "https://maps.app.goo.gl/pZupefR6QyYpS7Ys6"
             },
             {
                 nombre: "Pampin",
                 localidad: "Santiago",
-                web: "",
-                maps: ""
+                web: "http://www.pampinbar.com/",
+                maps: "https://maps.app.goo.gl/aBnLVYQPvofAaKMHA"
             }
         ],
 
