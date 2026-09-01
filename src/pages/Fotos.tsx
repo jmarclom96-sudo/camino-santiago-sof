@@ -12,26 +12,22 @@ import { getPerfilActual } from "../services/perfilService";
 import {
     getFotos,
     guardarFoto,
+    borrarFoto,
     type Foto
 } from "../services/fotoService";
 
+import "./Fotos.css";
 
 export default function Fotos() {
 
     const [fotos, setFotos] = useState<Foto[]>([]);
-
     const [cargando, setCargando] = useState(true);
-
     const [subiendo, setSubiendo] = useState(false);
-
+    const [borrando, setBorrando] = useState(false);
     const [mensaje, setMensaje] = useState("");
+    const [fotoSeleccionada, setFotoSeleccionada] = useState<Foto | null>(null);
 
     const perfil = getPerfilActual();
-
-
-    // ==========================
-    // CARGAR FOTOS
-    // ==========================
 
     useEffect(() => {
 
@@ -49,9 +45,7 @@ export default function Fotos() {
 
                 console.error(error);
 
-                setMensaje(
-                    "No se han podido cargar las fotos."
-                );
+                setMensaje("No se han podido cargar las fotos.");
 
             } finally {
 
@@ -66,10 +60,6 @@ export default function Fotos() {
     }, []);
 
 
-    // ==========================
-    // SUBIR FOTO
-    // ==========================
-
     async function subirFoto() {
 
         if (!perfil) {
@@ -82,93 +72,58 @@ export default function Fotos() {
 
         }
 
-
         const input = document.createElement("input");
 
         input.type = "file";
-
-        input.accept =
-            "image/jpeg,image/png,image/webp";
-
+        input.accept = "image/jpeg,image/png,image/webp";
 
         input.onchange = async () => {
 
             const file = input.files?.[0];
 
-            if (!file) {
-                return;
-            }
-
+            if (!file) return;
 
             try {
 
                 setSubiendo(true);
-
                 setMensaje("Subiendo foto...");
 
-
-                // ==========================
-                // SUBIR A VERCEL BLOB
-                // ==========================
-
                 const blob = await upload(
-
                     file.name,
-
                     file,
-
                     {
                         access: "public",
                         handleUploadUrl: "/api/upload"
                     }
-
                 );
-
-
-                // ==========================
-                // GUARDAR EN NEON
-                // ==========================
 
                 const nuevaFoto = await guardarFoto(
                     perfil.id,
                     blob.url
                 );
 
-
-                // Añadimos los datos del usuario
-                // para mostrarla inmediatamente.
-
-                setFotos(
-                    fotosActuales => [
-
-                        {
-                            ...nuevaFoto,
-                            nombre: perfil.nombre,
-                            usuario: perfil.usuario,
-                            avatar: perfil.foto
-                        },
-
-                        ...fotosActuales
-
-                    ]
-                );
-
+                setFotos(fotosActuales => [
+                    {
+                        ...nuevaFoto,
+                        nombre: perfil.nombre,
+                        usuario: perfil.usuario,
+                        avatar: perfil.foto
+                    },
+                    ...fotosActuales
+                ]);
 
                 setMensaje(
                     "¡Foto subida correctamente!"
                 );
-
 
             } catch (error) {
 
                 console.error(error);
 
                 setMensaje(
-
                     error instanceof Error
                         ? error.message
                         : "Ha ocurrido un error al subir la foto."
-
                 );
 
             } finally {
@@ -179,113 +134,116 @@ export default function Fotos() {
 
         };
 
-
         input.click();
 
     }
 
 
-    // ==========================
-    // CARGANDO
-    // ==========================
+    async function eliminarFoto() {
+
+        if (!fotoSeleccionada) return;
+
+        const confirmar = window.confirm(
+            "¿Seguro que quieres borrar esta foto?"
+        );
+
+        if (!confirmar) return;
+
+        try {
+
+            setBorrando(true);
+
+            await borrarFoto(fotoSeleccionada.id);
+
+            setFotos(fotosActuales =>
+                fotosActuales.filter(
+                    foto => foto.id !== fotoSeleccionada.id
+                )
+            );
+
+            setFotoSeleccionada(null);
+
+            setMensaje(
+                "Foto eliminada correctamente."
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            setMensaje(
+                error instanceof Error
+                    ? error.message
+                    : "Ha ocurrido un error al borrar la foto."
+            );
+
+        } finally {
+
+            setBorrando(false);
+
+        }
+
+    }
+
 
     if (cargando) {
 
         return (
-
             <div className="cards">
 
                 <div className="card">
 
-                    <p>
-                        Cargando fotos...
-                    </p>
+                    <p>Cargando fotos...</p>
 
                 </div>
 
             </div>
-
         );
 
     }
 
 
-    // ==========================
-    // ÚLTIMA FOTO
-    // ==========================
-
     const ultimaFoto = fotos[0];
-
-
-    // ==========================
-    // CARRUSEL ALEATORIO
-    // ==========================
 
     const fotosAleatorias = [...fotos]
         .sort(() => Math.random() - 0.5);
 
 
     return (
-
         <div className="cards">
-
-
-            {/* ==========================
-                CABECERA
-            ========================== */}
 
             <div className="card">
 
-                <h1>
-                    📸 Fotos del Camino
-                </h1>
+                <h1>📸 Fotos del Camino</h1>
 
                 <p>
                     Sube aquí tu foto.
                 </p>
-
 
                 <button
                     className="btn-primary"
                     onClick={subirFoto}
                     disabled={subiendo}
                 >
-
                     {subiendo
                         ? "Subiendo..."
-                        : "📷 Subir foto"
-                    }
-
+                        : "📷 Subir foto"}
                 </button>
 
-
                 {mensaje && (
-
-                    <p
-                        style={{
-                            marginTop: "1rem"
-                        }}
-                    >
+                    <p style={{ marginTop: "1rem" }}>
                         {mensaje}
                     </p>
-
                 )}
 
             </div>
 
 
-            {/* ==========================
-                ÚLTIMA FOTO
-            ========================== */}
-
             {ultimaFoto && (
 
                 <div className="card">
 
-                    <h2>
-                        ⭐ Última foto
-                    </h2>
-
+                    <h2>⭐ Última foto</h2>
 
                     <div>
 
@@ -299,13 +257,11 @@ export default function Fotos() {
                             }}
                         />
 
-
                         <p>
-
-                            👤 <strong>
+                            👤{" "}
+                            <strong>
                                 {ultimaFoto.nombre}
                             </strong>
-
                         </p>
 
                     </div>
@@ -315,18 +271,11 @@ export default function Fotos() {
             )}
 
 
-            {/* ==========================
-                CARRUSEL
-            ========================== */}
-
             {fotos.length > 0 && (
 
                 <div className="card">
 
-                    <h2>
-                        📸 Momentos del Camino
-                    </h2>
-
+                    <h2>📸 Momentos del Camino</h2>
 
                     <Swiper
                         spaceBetween={20}
@@ -336,9 +285,7 @@ export default function Fotos() {
 
                         {fotosAleatorias.map(foto => (
 
-                            <SwiperSlide
-                                key={foto.id}
-                            >
+                            <SwiperSlide key={foto.id}>
 
                                 <div>
 
@@ -354,17 +301,15 @@ export default function Fotos() {
                                         }}
                                     />
 
-
                                     <p
                                         style={{
                                             textAlign: "center"
                                         }}
                                     >
-
-                                        👤 <strong>
+                                        👤{" "}
+                                        <strong>
                                             {foto.nombre}
                                         </strong>
-
                                     </p>
 
                                 </div>
@@ -380,16 +325,9 @@ export default function Fotos() {
             )}
 
 
-            {/* ==========================
-                ÁLBUM
-            ========================== */}
-
             <div className="card">
 
-                <h2>
-                    🖼️ Álbum
-                </h2>
-
+                <h2>🖼️ Álbum</h2>
 
                 {fotos.length === 0 ? (
 
@@ -399,34 +337,25 @@ export default function Fotos() {
 
                 ) : (
 
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns:
-                                "repeat(auto-fill, minmax(140px, 1fr))",
-                            gap: "10px"
-                        }}
-                    >
+                    <div className="album-grid">
 
                         {fotos.map(foto => (
 
-                            <div
+                            <button
                                 key={foto.id}
+                                type="button"
+                                className="album-foto"
+                                onClick={() =>
+                                    setFotoSeleccionada(foto)
+                                }
                             >
 
                                 <img
                                     src={foto.blob_url}
                                     alt={`Foto de ${foto.nombre}`}
-                                    style={{
-                                        width: "100%",
-                                        aspectRatio: "1 / 1",
-                                        objectFit: "cover",
-                                        borderRadius: "10px",
-                                        display: "block"
-                                    }}
                                 />
 
-                            </div>
+                            </button>
 
                         ))}
 
@@ -436,8 +365,83 @@ export default function Fotos() {
 
             </div>
 
+
+            {fotoSeleccionada && (
+
+                <div
+                    className="foto-modal"
+                    onClick={() =>
+                        !borrando &&
+                        setFotoSeleccionada(null)
+                    }
+                >
+
+                    <div
+                        className="foto-modal-contenido"
+                        onClick={event =>
+                            event.stopPropagation()
+                        }
+                    >
+
+                        <button
+                            type="button"
+                            className="foto-modal-cerrar"
+                            onClick={() =>
+                                setFotoSeleccionada(null)
+                            }
+                            disabled={borrando}
+                        >
+                            ×
+                        </button>
+
+
+                        <img
+                            src={fotoSeleccionada.blob_url}
+                            alt={`Foto de ${fotoSeleccionada.nombre}`}
+                            className="foto-modal-imagen"
+                        />
+
+
+                        <p className="foto-modal-autor">
+                            👤{" "}
+                            <strong>
+                                {fotoSeleccionada.nombre}
+                            </strong>
+                        </p>
+
+
+                        <div className="foto-modal-acciones">
+
+                            <a
+                                href={fotoSeleccionada.blob_url}
+                                download
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="foto-modal-boton"
+                            >
+                                ⬇ Descargar
+                            </a>
+
+                            <button
+                                type="button"
+                                className="foto-modal-boton borrar"
+                                onClick={eliminarFoto}
+                                disabled={borrando}
+                            >
+                                {borrando
+                                    ? "Borrando..."
+                                    : "🗑 Borrar"}
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            )}
+
         </div>
-
     );
-
 }
+

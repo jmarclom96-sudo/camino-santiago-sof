@@ -58,3 +58,29 @@ export async function guardarFoto(
 
     return datos.foto;
 }
+
+
+export async function borrarFoto(id: number): Promise<void> {
+
+    const respuesta = await fetch("/api/fotos", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id
+        })
+    });
+
+    if (!respuesta.ok) {
+        throw new Error("Error borrando la foto");
+    }
+
+    const datos = await respuesta.json();
+
+    if (!datos.ok) {
+        throw new Error(
+            datos.error || "Error borrando la foto"
+        );
+    }
+}

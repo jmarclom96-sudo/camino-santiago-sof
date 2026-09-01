@@ -1,4 +1,5 @@
 import { neon } from "@neondatabase/serverless";
+import { del } from "@vercel/blob";
 
 export default {
     async fetch(request: Request) {
@@ -85,6 +86,69 @@ export default {
             }
 
 
+            // ==========================
+            // DELETE → borrar foto
+            // ==========================
+
+            if (request.method === "DELETE") {
+
+                const body = await request.json();
+
+                const id = Number(body.id);
+
+                if (!id) {
+
+                    return Response.json(
+                        {
+                            ok: false,
+                            error: "Falta el identificador de la foto."
+                        },
+                        {
+                            status: 400
+                        }
+                    );
+
+                }
+
+                // Primero obtenemos la URL del Blob
+                const resultado = await sql`
+                    SELECT blob_url
+                    FROM fotos
+                    WHERE id = ${id}
+                `;
+
+                if (resultado.length === 0) {
+
+                    return Response.json(
+                        {
+                            ok: false,
+                            error: "La foto no existe."
+                        },
+                        {
+                            status: 404
+                        }
+                    );
+
+                }
+
+                const blobUrl = resultado[0].blob_url;
+
+                // Borramos el archivo de Vercel Blob
+                await del(blobUrl);
+
+                // Borramos la referencia de Neon
+                await sql`
+                    DELETE FROM fotos
+                    WHERE id = ${id}
+                `;
+
+                return Response.json({
+                    ok: true
+                });
+
+            }
+
+
             return Response.json(
                 {
                     ok: false,
@@ -115,3 +179,4 @@ export default {
 
     }
 };
+
