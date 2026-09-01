@@ -599,8 +599,7 @@ useEffect(() => {
                                     <>
 
                                         <p>
-                                            Todavía no has subido
-                                            una foto para este reto.
+                                            Para este reto solo podrás subir la foto 1 vez, ten cuidado antes de subirla.
                                         </p>
 
 
